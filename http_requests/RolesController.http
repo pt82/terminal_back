@@ -1,0 +1,39 @@
+
+GET {{local_url}}/role-labels
+Authorization: Bearer {{sanctum_token}}
+Content-Type: application/json
+Accept: application/json
+
+###
+
+GET {{local_url}}/role-labels/7
+Authorization: Bearer {{sanctum_token}}
+Content-Type: application/json
+Accept: application/json
+
+###
+
+POST {{local_url}}/role-labels
+Authorization: Bearer {{sanctum_token}}
+Content-Type: application/json
+Accept: application/json
+
+{ "name" : "Ярлыцк-3", "franchises": [2, 4], "role_id": 5 }
+
+###
+
+PUT {{local_url}}/role-labels
+Authorization: Bearer {{sanctum_token}}
+Content-Type: application/json
+Accept: application/json
+
+{ "id": 7, "name" : "Ярлыцк-44", "franchises": [1, 3], "role_id": 5 }
+
+###
+
+DELETE {{local_url}}/role-labels/7
+Authorization: Bearer {{sanctum_token}}
+Content-Type: application/json
+Accept: application/json
+
+###
