@@ -49,7 +49,7 @@ class PersonsController extends Controller
         });
 
         //авторизация yC
-        $user = (object)['login' => 'paul@strijevski.ru', 'password' => '2fz2ex'];
+        $user = (object)['login' => 'name', 'password' => 'pass'];
         $this->token = Curl::to('https://api.yclients.com/api/v1/auth')
             ->withHeader('Content-Type:application/json')
             ->withHeader('Accept:application/vnd.yclients.v2+json')
@@ -181,26 +181,6 @@ class PersonsController extends Controller
 //            $newUser->syncRoles([11]);//обавляем роль client
             $chain->personHasChains()->attach($newUser->id, ['chid' => $chain->id, 'updated_at' => now(), 'created_at' => now()]);
 
-            //авторизация yC
-//            $user=(object)['login'=>'paul@strijevski.ru', 'password'=>'2fz2ex'];
-//            $token = Curl::to('https://api.yclients.com/api/v1/auth')
-//                ->withHeader('Content-Type:application/json')
-//                ->withHeader('Accept:application/vnd.yclients.v2+json')
-//                ->withHeader('Authorization:Bearer 5c8pfgzh7tp6fw8b22d2')
-//                ->withData($user)
-//                ->asJson()
-////            ->asJsonRequest()
-//                ->post();
-//
-//            $newClient = Curl::to('https://api.yclients.com/api/v1/clients/' . $data->yc_company_id  )
-//                ->withHeader('Content-Type:application/json')
-//                ->withHeader('Accept:application/vnd.yclients.v2+json')
-//                ->withHeader('Authorization:Bearer 5c8pfgzh7tp6fw8b22d2, User ' . $token->data->user_token)
-//                ->withData(['name'=>\request('name'),
-//                    'phone'=>preg_replace('/[^0-9]/', '', \request('phone'))])
-//                ->asJson()
-////                   ->asJsonRequest()
-//                ->post();
         $categoryIds = $request->category ?? [];
         $newClient = $yc->to('clients/' . $data->yc_company_id)
             ->withData(['name'=>\request('name'),
@@ -303,22 +283,7 @@ class PersonsController extends Controller
     //новый персонал
     public function createPersonal(UserRequest $request)
     {
-//        info(print_r($request->role, true));
-//        $request->validate([
-//                    'email' => [
-//                'email',
-//                 Rule::unique('users')->ignore(\Auth::id()),
-//
-//            ],
-//
-//              'phone' => [
-//                 'required',
-//                 Rule::unique('users')->ignore(\Auth::id()),
-//             ]
-//        ]);
-//        $validatedData = $request->validated();
 
-//        $item = Item::where('name', '=', 'Персонал')->first();
         if (Auth::user()->level() >= 20) {
            if(isset($request->franchise_admin_id) && Auth::user()->level() < 100){
                 return response()->json(['error' => 'Нет прав присвоить франшизу'], 403);
@@ -393,24 +358,6 @@ class PersonsController extends Controller
                 $user->detachAllRoles();
             }
 
-//        if(isset($request->photos)) {
-
-
-//                $filename = $user->id . '_' . $imageOne->getClientOriginalName();
-//                $newPhoto = new Photo();
-//                $newPhoto->path = '/photos/ivideon/' . $user->id . '/' . $filename;
-////                $newPhoto->user_id = $photoIvideon->id;
-////                $newPhoto->ivideon_id = $user->id;
-//
-//                $image_resize = \Image::make($image->getRealPath());
-//                $image_resize->resize(300, null, function ($constraint) {
-//                    $constraint->aspectRatio();
-//                });
-//                $image_resize->save(public_path('/photo/clients/' . $filename));
-//                $newPhoto->save();
-//            }
-//        }
-//        }
             return response()->json([
                 'success' => true,
                 'ivideon_success' => $loadIvideon->success ?? '',

